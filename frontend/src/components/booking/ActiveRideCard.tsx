@@ -7,9 +7,10 @@ import { Button } from '../common/Button';
 interface ActiveRideCardProps {
   driver?: any;
   isConfirmed?: boolean;
+  otp?: string;
 }
 
-export const ActiveRideCard: React.FC<ActiveRideCardProps> = ({ driver, isConfirmed = false }) => {
+export const ActiveRideCard: React.FC<ActiveRideCardProps> = ({ driver, isConfirmed = false, otp }) => {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -35,6 +36,18 @@ export const ActiveRideCard: React.FC<ActiveRideCardProps> = ({ driver, isConfir
           <p className="text-sm text-gray-500">A driver is on the way to pick you up.</p>
           <p className="text-xs text-gray-400 mt-4 animate-pulse">Loading driver details...</p>
         </div>
+
+        {otp && (
+          <div className="status-card bg-gray-900 rounded-3xl p-5 shadow-float flex items-center justify-between border border-gray-800">
+            <div>
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Your Ride PIN</p>
+              <p className="text-xs text-gray-400">Share this with driver to start</p>
+            </div>
+            <div className="bg-gray-800 px-4 py-2 rounded-xl">
+              <h2 className="font-bold text-2xl text-white tracking-widest">{otp}</h2>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -48,6 +61,18 @@ export const ActiveRideCard: React.FC<ActiveRideCardProps> = ({ driver, isConfir
           <h2 className="font-bold text-xl text-gray-900">Finding your driver...</h2>
           <p className="text-sm text-gray-500 mt-2">Connecting you to the nearest Kinetic partner.</p>
         </div>
+
+        {otp && (
+          <div className="status-card bg-gray-900 rounded-3xl p-5 shadow-float flex items-center justify-between border border-gray-800">
+            <div>
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Your Ride PIN</p>
+              <p className="text-xs text-gray-400">Share this with driver to start</p>
+            </div>
+            <div className="bg-gray-800 px-4 py-2 rounded-xl">
+              <h2 className="font-bold text-2xl text-white tracking-widest">{otp}</h2>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -144,6 +169,22 @@ export const ActiveRideCard: React.FC<ActiveRideCardProps> = ({ driver, isConfir
           <p className="text-sm font-bold text-gray-900">💳 Card</p>
         </div>
       </div>
+
+      {/* 4. OTP Row */}
+      {otp && (
+        <div 
+          ref={el => cardsRef.current[3] = el}
+          className="status-card bg-gray-900 rounded-3xl p-5 shadow-float flex items-center justify-between border border-gray-800"
+        >
+          <div>
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Your Ride PIN</p>
+            <p className="text-xs text-gray-400">Share this with driver to start</p>
+          </div>
+          <div className="bg-gray-800 px-4 py-2 rounded-xl">
+            <h2 className="font-bold text-2xl text-white tracking-widest">{otp}</h2>
+          </div>
+        </div>
+      )}
 
     </div>
   );
