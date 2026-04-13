@@ -21,6 +21,7 @@ import { DriverMobileHome } from './pages/driver/DriverMobileHome';
 // import { DriverDashboardPage } from './pages/driver/DriverDashboardPage';
 import { DriverDashboardPage } from './pages/driver/DriverDashboardPage';
 import { DriverNavigationPage } from './pages/driver/DriverNavigationPage';
+import { DriverActiveRidePage } from './pages/driver/DriverActiveRidePage';
 import { EarningsPage } from './pages/driver/EarningsPage';
 import { RideHistoryPage } from './pages/driver/RideHistoryPage';
 import { ProfileVehiclePage } from './pages/driver/ProfileVehiclePage';
@@ -55,6 +56,7 @@ export const App: React.FC = () => {
               <Route path="/driver/mobile" element={<DriverMobileHome />} />
               <Route path="/driver/dashboard" element={<DriverDashboardPage />} />
               <Route path="/driver/navigation" element={<DriverNavigationPage />} />
+              <Route path="/driver/active" element={<DriverActiveRidePage />} />
               <Route path="/driver/earnings" element={<EarningsPage />} />
               <Route path="/driver/history" element={<RideHistoryPage />} />
               <Route path="/driver/profile" element={<ProfileVehiclePage />} />
