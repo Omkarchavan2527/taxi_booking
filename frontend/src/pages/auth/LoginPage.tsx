@@ -69,6 +69,12 @@ export const LoginPage: React.FC = () => {
           <p className="text-gray-500 text-sm">Please enter your details to continue your journey.</p>
         </div>
 
+        {error && (
+          <div className="mb-4 p-3 bg-red-50/80 border border-red-200 text-red-600 rounded-xl text-sm font-medium text-center backdrop-blur-sm">
+            {error}
+          </div>
+        )}
+
         <form onSubmit={handleLogin}>
           <Input 
             label="Email or Phone" 
