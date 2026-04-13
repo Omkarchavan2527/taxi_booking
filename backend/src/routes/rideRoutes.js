@@ -7,7 +7,8 @@ import {
   rateRide,
   requestRide,
   acceptRide,
-  getPendingRides
+  getPendingRides,
+  getRideById
 } from '../controllers/rideController.js';
 import { protect } from '../middleware/authMiddleware.js';
 const router = express.Router();
@@ -20,6 +21,7 @@ router.post('/estimate', estimateRide);
 router.post('/book', bookRide);
 router.post('/request', requestRide);
 router.get('/pending', getPendingRides);
+router.get('/:id', getRideById);
 
 // Execution flows
 router.post('/:id/verify-otp', verifyOtp);
