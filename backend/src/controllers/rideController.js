@@ -215,6 +215,22 @@ export const getPendingRides = async (req, res) => {
   }
 };
 
+export const getRideById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const ride = await Ride.findById(id).populate('driver', 'name vehicle rating phone').populate('user', 'name email phone rating avatar');
+    
+    if (!ride) {
+      return res.status(404).json({ message: 'Ride not found' });
+    }
+
+    res.json(ride);
+  } catch (error) {
+    console.error("Error fetching ride:", error);
+    res.status(500).json({ message: 'Failed to fetch ride' });
+  }
+};
+
 export const acceptRide = async (req, res) => {
   try {
     const { id } = req.params; // The ID of the ride from the URL
