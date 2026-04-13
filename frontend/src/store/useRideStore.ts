@@ -27,6 +27,9 @@ interface RideState {
   
   requestRide: () => Promise<any>;
   acceptRide: (rideId: string) => Promise<any>;
+  fetchRide: (rideId: string) => Promise<any>;
+  completeRide: (rideId: string) => Promise<any>;
+  verifyOtp: (rideId: string, otp: string) => Promise<any>;
 }
 
 export const useRideStore = create<RideState>((set, get) => ({
@@ -109,6 +112,74 @@ export const useRideStore = create<RideState>((set, get) => ({
       set({ 
         isLoading: false, 
         error: error.response?.data?.message || "Failed to accept ride." 
+      });
+      throw error;
+    }
+  },
+
+  fetchRide: async (rideId: string) => {
+    set({ isLoading: true, error: null });
+    try {
+      const authData = localStorage.getItem('auth-storage');
+      const token = authData ? JSON.parse(authData)?.state?.token : null;
+
+      const response = await api.get(`/rides/${rideId}`, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : ''
+        }
+      });
+
+      set({ isLoading: false, currentRide: response.data });
+      return response.data;
+    } catch (error: any) {
+      set({ 
+        isLoading: false, 
+        error: error.response?.data?.message || "Failed to fetch ride." 
+      });
+      throw error;
+    }
+  },
+
+  completeRide: async (rideId: string) => {
+    set({ isLoading: true, error: null });
+    try {
+      const authData = localStorage.getItem('auth-storage');
+      const token = authData ? JSON.parse(authData)?.state?.token : null;
+
+      const response = await api.patch(`/rides/${rideId}/status`, { status: 'completed' }, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : ''
+        }
+      });
+
+      set({ isLoading: false, currentRide: response.data });
+      return response.data;
+    } catch (error: any) {
+      set({ 
+        isLoading: false, 
+        error: error.response?.data?.message || "Failed to complete ride." 
+      });
+      throw error;
+    }
+  },
+  verifyOtp: async (rideId: string, otp: string) => {
+    set({ isLoading: true, error: null });
+    try {
+      const authData = localStorage.getItem('auth-storage');
+      const token = authData ? JSON.parse(authData)?.state?.token : null;
+
+      const response = await api.post(`/rides/${rideId}/verify-otp`, { otp }, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : ''
+        }
+      });
+
+      set({ isLoading: false, currentRide: response.data.ride });
+      return response.data;
+    } catch (error: any) {
+      set({ 
+        isLoading: false, 
+        error: error.response?.data?.message || "Failed to verify OTP." 
       });
       throw error;
     }
