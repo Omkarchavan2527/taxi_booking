@@ -39,6 +39,12 @@ export const initSocket = (server) => {
       console.log(`Driver declined ride ${rideId}`);
     });
 
+    socket.on('driver:complete-ride', ({ rideId }) => {
+      console.log(`Driver completed ride ${rideId}`);
+      // Notify the specific rider that the ride is done
+      io.emit(`ride:completed:${rideId}`, { rideId, message: 'You have arrived at your destination!' });
+    });
+
     // --- Chat Events ---
     socket.on('chat:typing', ({ rideId, isTyping }) => {
       // Send typing indicator to the other person in the room
